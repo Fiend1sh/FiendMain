@@ -1,2 +1,2 @@
-local key = "BARS"
+local key = "YEAH"
 return key
