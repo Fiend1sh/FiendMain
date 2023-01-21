@@ -1,2 +1,2 @@
-local key = "YEAH"
+local key = "KEY-YEAH"
 return key
