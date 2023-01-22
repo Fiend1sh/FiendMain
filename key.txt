@@ -1,2 +1,2 @@
-local key = "KEY-POOL"
+local key = "KEY-GREAT"
 return key
