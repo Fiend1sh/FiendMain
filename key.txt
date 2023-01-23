@@ -1,2 +1,2 @@
-local key = "KEY-GREAT"
+local key = "KEY-DARE"
 return key
