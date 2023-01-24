@@ -1,2 +1,2 @@
-local key = "KEY-DARE"
+local key = "KEY-SHUT"
 return key
