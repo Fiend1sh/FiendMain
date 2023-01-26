@@ -1,2 +1,2 @@
-local key = "KEY-SHUT"
+local key = "KEY-DOWN"
 return key
