@@ -1,2 +1,2 @@
-local key = "KEY-DOWN"
+local key = "KEY-YAY"
 return key
