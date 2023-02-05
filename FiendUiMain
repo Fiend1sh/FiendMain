@@ -4297,41 +4297,6 @@ end)
             StopTween(_G.Auto_Farm_Level)
         end)
 
-	Main:Toggle("One Click Auto Farm",_G.AutoKaitan,function(Auto)        
-						_G.AutoKaitan = Auto
-						_G.UseCode = Auto
-						_G.AutoFarmKaitan = Auto
-						_G.Fullystats = Auto
-						_G.AutoBuddySwordK = Auto
-						_G.AutoWorld2 = Auto
-						_G.AutoKillCakePrince = Auto
-					    _G.AutoBacklegv = Auto
-                        _G.AutoBuyChip = Auto
-                        StopTween(_G.AutoKaitan)
-	end)
-				
-				function EquipWeaponSword()
-	pcall(function()
-		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-			if v.ToolTip == "Sword" and v:IsA('Tool') then
-				local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name) 
-				game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid) 
-			end
-		end
-	end)
-end
-
-function EquipWeaponMelee()
-	pcall(function()
-		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-			if v.ToolTip == "Melee" and v:IsA('Tool') then
-				local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name) 
-				game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid) 
-			end
-		end
-	end)
-end
-
 Main:Toggle("Auto Max Mastery [Melee]",_G.MeleeFarm,function(vu)
 	_G.MeleeFarm = vu
 end)
