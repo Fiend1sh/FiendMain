@@ -1,2 +1,2 @@
-local key = "KEY-ILL"
+local key = "KEY-IM"
 return key
