@@ -1,2 +1,2 @@
-local key = "KEY-ZOMBIE"
+local key = "KEY-EPIC"
 return key
