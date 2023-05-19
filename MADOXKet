@@ -1,0 +1,2 @@
+local key = "KEY-OBAMA"
+return key
