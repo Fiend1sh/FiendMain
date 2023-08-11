@@ -1,2 +1,2 @@
-local key = "KEY-KIMONO"
+local key = "KEY-SIZE"
 return key
