@@ -1,2 +1,2 @@
-local key = "KEY-SIZE"
+local key = "KEY-BIRD"
 return key
