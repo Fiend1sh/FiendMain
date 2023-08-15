@@ -1,2 +1,2 @@
-local key = "KEY-CRIT"
+local key = "KEY-LUCK"
 return key
