@@ -1,1 +1,2 @@
-
+local key = "KEY-QRWRADWWAR"
+return key
