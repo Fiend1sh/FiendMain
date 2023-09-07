@@ -1,2 +1,2 @@
-local key = "KEY-OFFLINE"
+local key = "KEY-KAMIRI"
 return key
