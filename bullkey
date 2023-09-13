@@ -1,2 +1,2 @@
-local key = "KEY-OVEN"
+local key = "KEY-KITCHEN"
 return key
