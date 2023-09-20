@@ -1,2 +1,2 @@
-local key = "KEY-BUGSAY"
+local key = "KEY-LARGA"
 return key
