@@ -1,2 +1,2 @@
-local key = "KEY-LOLIPOP"
+local key = "KEY-PROP"
 return key
