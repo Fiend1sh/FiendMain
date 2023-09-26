@@ -1,2 +1,2 @@
-local key = "KEY-COKE"
+local key = "KEY-EVIL"
 return key
