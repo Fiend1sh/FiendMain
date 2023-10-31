@@ -1,2 +1,2 @@
-local key = "KEY-HIDDEN"
+local key = "KEY-REVERSE"
 return key
