@@ -1,2 +1,2 @@
-local key = "KEY-BIKE"
+local key = "KEY-EXERT"
 return key
