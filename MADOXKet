@@ -1,2 +1,2 @@
-local key = "KEY-EXERT"
+local key = "KEY-DOMAIN"
 return key
