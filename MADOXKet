@@ -1,2 +1,2 @@
-local key = "KEY-DOMAIN"
+local key = "KEY-NEKO"
 return key
