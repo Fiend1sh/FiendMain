@@ -1,2 +1,2 @@
-local key = "KEY-HALF"
+local key = "KEY-CONS"
 return key
