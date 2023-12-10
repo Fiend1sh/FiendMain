@@ -1,2 +1,2 @@
-local key = "KEY-CONS"
+local key = "KEY-PROS"
 return key
