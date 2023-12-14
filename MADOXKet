@@ -1,2 +1,2 @@
-local key = "KEY-SEAL"
+local key = "KEY-HAMS"
 return key
