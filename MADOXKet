@@ -1,2 +1,2 @@
-local key = "KEY-LODS"
+local key = "KEY-METHOD"
 return key
