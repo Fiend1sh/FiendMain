@@ -617,7 +617,7 @@ end
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-local Window = Fluent:CreateWindow({Title = "MADOX HUB",SubTitle = "| ",TabWidth = 155,Size = UDim2.fromOffset(555, 320),Acrylic = false,Theme = "Dark",MinimizeKey = Enum.KeyCode.End})
+local Window = Fluent:CreateWindow({Title = "Tsuo Hub [Freemium]",SubTitle = "| https://discord.gg/tsuoscripts",TabWidth = 155,Size = UDim2.fromOffset(555, 320),Acrylic = false,Theme = "Amethyst",MinimizeKey = Enum.KeyCode.End})
 local Tabs = {
   Main = Window:AddTab({Title = "Farm", Icon = ""}),
   Settings = Window:AddTab({Title = "Config", Icon = ""}),
@@ -662,7 +662,7 @@ ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton.BorderSizePixel = 0
 ImageButton.Position = UDim2.new(0.218742043, 0, -0.155235752, 0)
 ImageButton.Size = UDim2.new(0, 64, 0, 64)
-ImageButton.Image = "rbxassetid://73653929894877"
+ImageButton.Image = "rbxassetid://77608020849823"
 ImageButton.Draggable = true
 ImageButton.MouseButton1Click:Connect(function()
 	game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.End, false, game)
@@ -676,12 +676,12 @@ IsPc = CheckPC()
 executor = tostring(identifyexecutor())
 if IsPc then
   if not string.find(executor, "Wave") or not string.find(executor, "AWP") then
-    Fluent:Notify({Title = "Free Script",Content = "your executor isn't offically supported, you may experience bug or glitch",SubContent = "",Duration = 15})
+    Fluent:Notify({Title = "📢 Warning 📢",Content = "your executor isn't offically supported, you may experience bug or glitch",SubContent = "By.xendrossy",Duration = 15})
   else
-    Fluent:Notify({Title = "Free Script",Content = "",SubContent = "",Duration = 15})
+    Fluent:Notify({Title = "📢 Warning 📢",Content = "your executor is goods.",SubContent = "By.xendrossy",Duration = 15})
   end
 else
-  Fluent:Notify({Title = "Free Script",Content = "",SubContent = "",Duration = 15})
+  Fluent:Notify({Title = "📢 Warning 📢",Content = "your executor is goods.",SubContent = "By.xendrossy",Duration = 15})
 end
 
 local FarmLevel = Tabs.Main:AddToggle("FarmLevel", {Title = "Auto Farm Level", Description = "", Default = false})
