@@ -2001,10 +2001,10 @@
 
 	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 	local Window = Fluent:CreateWindow({
-		Title = "DEEP HUB [ FREEMIUM ]",
-		SubTitle = "  by MINISTRY",
+		Title = "DEEP HUB [ FREE ]",
+		SubTitle = "  by Ministry",
 		TabWidth = 160,
-		Theme = "Darker",
+		Theme = "Dark",
 		Acrylic = false,
 		Size = UDim2.fromOffset(530, 350),
 		MinimizeKey = Enum.KeyCode.End
@@ -2080,46 +2080,46 @@
 			Title = "Farm"
 		}),
 		Settings = Window:AddTab({
-			Title = "Farm Settings"
+			Title = "Cài đặt Farm"
 		}),
 		Melee = Window:AddTab({
-			Title = "Auto V2"
+			Title = "Tự động lấy Võ V2"
 		}),
 		Quests = Window:AddTab({
-			Title = "Quest"
+			Title = "Nhiệm vụ - Vật phẩm"
 		}),
 		SeaEvent = Window:AddTab({
-			Title = "Sea Event"
+			Title = "Sự kiện Biển"
 		}),
 		Mirage = Window:AddTab({
-			Title = "Mirage Island + V4"
+			Title = "Đảo Mirage + Chủng tộc V4"
 		}),
 		Drago = Window:AddTab({
-			Title = "Drago Dojo Island"
+			Title = "Đảo Drago Dojo"
 		}),
 		Prehistoric = Window:AddTab({
-			Title = "Prehistoric"
+			Title = "Tiền sử"
 		}),
 		Raids = Window:AddTab({
-			Title = "Raids"
+			Title = "Đột kích"
 		}),
 		Combat = Window:AddTab({
-			Title = "Combat"
+			Title = "Chiến đấu PVP"
 		}),
 		Travel = Window:AddTab({
-			Title = "Teleport"
+			Title = "Dịch chuyển"
 		}),
 		Shop = Window:AddTab({
-			Title = "Shop"
+			Title = "Cửa hàng"
 		}),
 		Misc = Window:AddTab({
-			Title = "Misc"
+			Title = "Khác"
 		})
 	}
 
 	Tabs.Discord:AddButton({
-		Title = "OWNER: MINISTRY",
-		Description = "",
+		Title = "still making discord",
+		Description = "Đây nha anh em ( Copy rồi dán vào trình duyệt )",
 		Callback = function()
 			setclipboard(tostring(""))
 		end
@@ -4598,7 +4598,7 @@
 	local Bringmob = Tabs.Settings:AddToggle("Bringmob", {
 		Title = "Bring Mobs",
 		Description = "",
-		Default = true
+		Default = false
 	})
 	Bringmob:OnChanged(function(Value)
 		_B = Value
