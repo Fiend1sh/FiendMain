@@ -34,10 +34,12 @@
 		local start = plr.PlayerGui:WaitForChild("Main"):WaitForChild("Loading") and game:IsLoaded()
 		wait()
 	until start
+	World1 = game.PlaceId == 85211729168715
+  World2 = game.PlaceId == 79091703265657
+  World3 = game.PlaceId == 100117331123089
 	World1 = game.PlaceId == 2753915549
 	World2 = game.PlaceId == 4442272183
 	World3 = game.PlaceId == 7449423635
-	Sea = World1 or World2 or World3 or plr:Kick("❌ Error : A[12]Blox Fruits ❌")
 	Marines = function()
 		replicated.Remotes.CommF_:InvokeServer("SetTeam", "Marines")
 	end
@@ -434,25 +436,79 @@
 			end
 		end
 	end
-	BringEnemy = function()
-		if not _B then
-			return
-		end
-		for _, v in pairs(workspace.Enemies:GetChildren()) do
-			if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-				if (v.PrimaryPart.Position - PosMon).Magnitude <= 250 then
-					v.PrimaryPart.CFrame = CFrame.new(PosMon)
-					v.PrimaryPart.CanCollide = true;
-					v:FindFirstChild("Humanoid").WalkSpeed = 0;
-					v:FindFirstChild("Humanoid").JumpPower = 0;
-					if v.Humanoid:FindFirstChild("Animator") then
-						v.Humanoid.Animator:Destroy()
-					end;
-					plr.SimulationRadius = math.huge
-				end
-			end
-		end                    	
-	end
+	--// Optimized BringEnemy Function (Compatible with Aurora Script)
+local plr = game.Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+
+-- Tween movement for mobs
+local function TweenObject(Object, Pos, Speed)
+    Speed = Speed or 350
+    if not Object or not Pos then return end
+    local Distance = (Pos.Position - Object.Position).Magnitude
+    local info = TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear)
+    local tween = TweenService:Create(Object, info, {CFrame = Pos})
+    tween:Play()
+end
+
+-- Get average position of mobs with the same name
+local function GetMobPosition(EnemiesName)
+    local pos = Vector3.zero
+    local count = 0
+    for _, v in pairs(workspace.Enemies:GetChildren()) do
+        if v.Name == EnemiesName and v:FindFirstChild("HumanoidRootPart") then
+            pos += v.HumanoidRootPart.Position
+            count += 1
+        end
+    end
+    if count == 0 then
+        return nil
+    end
+    return pos / count
+end
+
+-- Bring mobs closer together
+BringEnemy = function()
+    if not _B then return end
+    local enemies = workspace.Enemies:GetChildren()
+    if #enemies == 0 then return end
+
+    local totalpos = {}
+
+    -- Get average position for each enemy type
+    for _, v in pairs(enemies) do
+        if not totalpos[v.Name] then
+            totalpos[v.Name] = GetMobPosition(v.Name)
+        end
+    end
+
+    -- Group mobs around their average position
+    for _, v in pairs(workspace.Enemies:GetChildren()) do
+        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+            local hrp = v.HumanoidRootPart
+            local humanoid = v.Humanoid
+            if humanoid.Health > 0 and (hrp.Position - plr.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+                local mobPos = totalpos[v.Name]
+                if mobPos then
+                    local TargetCFrame = CFrame.new(mobPos.X, mobPos.Y, mobPos.Z)
+                    local Distance = (hrp.Position - TargetCFrame.Position).Magnitude
+
+                    if Distance > 3 and Distance <= 280 then
+                        TweenObject(hrp, TargetCFrame, 300)
+                        hrp.CanCollide = false
+                        humanoid.WalkSpeed = 0
+                        humanoid.JumpPower = 0
+                        if humanoid:FindFirstChild("Animator") then
+                            humanoid.Animator:Destroy()
+                        end
+                        pcall(function()
+                            sethiddenproperty(plr, "SimulationRadius", math.huge)
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end
 	Useskills = function(weapon, skill)
 		if weapon == "Melee" then
 			weaponSc("Melee")
@@ -906,7 +962,7 @@
 	spawn(function()
 		while task.wait() do
 			pcall(function()
-				if _G.SailBoat_Hydra or _G.WardenBoss or _G.FarmBoss or _G.tpSubmarineWorker or _G.AutoFactory or _G.HighestMirage or _G.HCM or _G.PGB or _G.Leviathan1 or _G.UPGDrago or _G.Complete_Trials or _G.TpDrago_Prehis or _G.BuyDrago or _G.AutoFireFlowers or _G.DT_Uzoth or _G.AutoBerry or _G.Prehis_Find or _G.Prehis_Skills or _G.Prehis_DB or _G.Prehis_DE or _G.FarmBlazeEM or _G.Dojoo or _G.CollectPresent or _G.AutoLawKak or _G.TpLab or _G.AutoPhoenixF or _G.AutoFarmChest or _G.AutoHytHallow or _G.LongsWord or _G.BlackSpikey or _G.AutoHolyTorch or _G.TrainDrago  or _G.AutoSaber or _G.FarmMastery_Dev or _G.CitizenQuest or _G.AutoEctoplasm or _G.KeysRen or _G.Auto_Rainbow_Haki or _G.obsFarm or _G.AutoBigmom or _G.Doughv2 or _G.AuraBoss or _G.Raiding or _G.Auto_Cavender or _G.TpPly or _G.Bartilo_Quest or _G.Level or _G.FarmEliteHunt or _G.AutoZou or _G.AutoFarm_Bone or getgenv().AutoMaterial or _G.CraftVM or _G.FrozenTP or _G.TPDoor or _G.AcientOne or _G.AutoFarmNear or _G.AutoRaidCastle or _G.DarkBladev3 or _G.AutoFarmRaid or _G.Auto_Cake_Prince or _G.Addealer or _G.TPNpc or _G.TwinHook or _G.FindMirage or _G.FarmChestM or _G.Shark or _G.TerrorShark or _G.Piranha or _G.MobCrew or _G.SeaBeast1 or _G.FishBoat or _G.AutoPole or _G.AutoPoleV2 or _G.Auto_SuperHuman or _G.AutoDeathStep or _G.Auto_SharkMan_Karate or _G.Auto_Electric_Claw or _G.AutoDragonTalon or _G.Auto_Def_DarkCoat or _G.Auto_God_Human or _G.Auto_Tushita or _G.AutoMatSoul or _G.AutoKenVTWO or _G.AutoSerpentBow or _G.AutoFMon or _G.Auto_Soul_Guitar or _G.TPGEAR or _G.AutoSaw or _G.AutoTridentW2 or _G.Auto_StartRaid or _G.AutoEvoRace or _G.AutoGetQuestBounty or _G.MarinesCoat or _G.TravelDres or _G.Defeating or _G.DummyMan or _G.Auto_Yama or _G.Auto_SwanGG or _G.SwanCoat or _G.AutoEcBoss or _G.Auto_Mink or _G.Auto_Human or _G.Auto_Skypiea or _G.Auto_Fish or _G.CDK_TS or _G.CDK_YM or _G.CDK or _G.AutoFarmGodChalice or _G.AutoFistDarkness or _G.AutoMiror or _G.Teleport or _G.AutoKilo or _G.AutoGetUsoap or _G.Praying or _G.TryLucky or _G.AutoColShad or _G.AutoUnHaki or _G.Auto_DonAcces or _G.AutoRipIngay or _G.DragoV3 or _G.DragoV1 or _G.SailBoats or NextIs or _G.FarmGodChalice or _G.IceBossRen or senth or senth2 or _G.Lvthan or _G.beasthunter or _G.DangerLV or _G.Relic123 or _G.tweenKitsune or _G.Collect_Ember or _G.AutofindKitIs or _G.snaguine or _G.TwFruits or _G.tweenKitShrine or _G.Tp_LgS or _G.Tp_MasterA or _G.tweenShrine or _G.FarmMastery_G or _G.FarmMastery_S or _G.FarmPhaBinh or _G.FarmTyrant then
+				if _G.SailBoat_Hydra or _G.WardenBoss or _G.FarmBoss or _G.tpSubmarineWorker or _G.AutoFactory or _G.HighestMirage or _G.HCM or _G.PGB or _G.Leviathan1 or _G.UPGDrago or _G.Complete_Trials or _G.TpDrago_Prehis or _G.BuyDrago or _G.AutoFireFlowers or _G.DT_Uzoth or _G.AutoBerry or _G.Prehis_Find or _G.Prehis_Skills or _G.Prehis_DB or _G.Prehis_DE or _G.FarmBlazeEM or _G.Dojoo or _G.CollectPresent or _G.AutoLawKak or _G.TpLab or _G.AutoPhoenixF or _G.AutoFarmChest or _G.AutoHytHallow or _G.LongsWord or _G.BlackSpikey or _G.AutoHolyTorch or _G.TrainDrago  or _G.AutoSaber or _G.FarmMastery_Dev or _G.CitizenQuest or _G.AutoEctoplasm or _G.KeysRen or _G.Auto_Rainbow_Haki or _G.obsFarm or _G.AutoBigmom or _G.Doughv2 or _G.AuraBoss or _G.Raiding or _G.Auto_Cavender or _G.TpPly or _G.Bartilo_Quest or _G.Level or _G.FarmEliteHunt or _G.AutoZou or _G.AutoFarm_Bone or getgenv().AutoMaterial or _G.CraftVM or _G.FrozenTP or _G.TPDoor or _G.AcientOne or _G.AutoFarmNear or _G.AutoRaidCastle or _G.DarkBladev3 or _G.AutoFarmRaid or _G.Auto_Cake_Prince or _G.Addealer or _G.TPNpc or _G.TwinHook or _G.FindMirage or _G.FarmChestM or _G.Shark or _G.TerrorShark or _G.Piranha or _G.MobCrew or _G.SeaBeast1 or _G.FishBoat or _G.AutoPole or _G.AutoPoleV2 or _G.Auto_SuperHuman or _G.AutoDeathStep or _G.Auto_SharkMan_Karate or _G.Auto_Electric_Claw or _G.AutoDragonTalon or _G.Auto_Def_DarkCoat or _G.Auto_God_Human or _G.Auto_Tushita or _G.AutoMatSoul or _G.AutoKenVTWO or _G.AutoSerpentBow or _G.AutoFMon or _G.Auto_Soul_Guitar or _G.TPGEAR or _G.AutoSaw or _G.AutoTridentW2 or _G.Auto_StartRaid or _G.AutoEvoRace or _G.AutoGetQuestBounty or _G.MarinesCoat or _G.TravelDres or _G.Defeating or _G.DummyMan or _G.Auto_Yama or _G.Auto_SwanGG or _G.SwanCoat or _G.AutoEcBoss or _G.Auto_Mink or _G.Auto_Human or _G.Auto_Skypiea or _G.Auto_Fish or _G.CDK_TS or _G.CDK_YM or _G.CDK or _G.AutoFarmGodChalice or _G.AutoFistDarkness or _G.AutoMiror or _G.Teleport or _G.AutoKilo or _G.AutoGetUsoap or _G.Praying or _G.TryLucky or _G.AutoColShad or _G.AutoUnHaki or _G.Auto_DonAcces or _G.AutoRipIngay or _G.DragoV3 or _G.DragoV1 or _G.SailBoats or NextIs or _G.FarmGodChalice or _G.IceBossRen or senth or senth2 or _G.Lvthan or _G.beasthunter or _G.DangerLV or _G.Relic123 or _G.tweenKitsune or _G.Collect_Ember or _G.AutofindKitIs or _G.snaguine or _G.TwFruits or _G.tweenKitShrine or _G.Tp_LgS or _G.Tp_MasterA or _G.tweenShrine or _G.FarmMastery_G or _G.FarmMastery_S or _G.FarmPhaBinh or _G.FarmTyrant or _G.AutoDefeatHalloweenDoorEnemie or  _G.HalloweenToggle or _G.HalloweenGacha2025 or _G.Werewolf then
 					shouldTween = true
 					if not plr.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
 						local Noclip = Instance.new("BodyVelocity")
@@ -2001,10 +2057,10 @@
 
 	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 	local Window = Fluent:CreateWindow({
-		Title = "DEEP HUB [ FREE ]",
-		SubTitle = "  by Ministry",
+		Title = "DEEP HUB [ FREEMIUM ]",
+		SubTitle = "  by MINISTRY",
 		TabWidth = 160,
-		Theme = "Dark",
+		Theme = "Darker",
 		Acrylic = false,
 		Size = UDim2.fromOffset(530, 350),
 		MinimizeKey = Enum.KeyCode.End
@@ -2080,46 +2136,252 @@
 			Title = "Farm"
 		}),
 		Settings = Window:AddTab({
-			Title = "Cài đặt Farm"
+			Title = "Farm Settings"
 		}),
 		Melee = Window:AddTab({
-			Title = "Tự động lấy Võ V2"
+			Title = "Auto V2"
 		}),
 		Quests = Window:AddTab({
-			Title = "Nhiệm vụ - Vật phẩm"
+			Title = "Quest"
 		}),
 		SeaEvent = Window:AddTab({
-			Title = "Sự kiện Biển"
+			Title = "Sea Event"
 		}),
 		Mirage = Window:AddTab({
-			Title = "Đảo Mirage + Chủng tộc V4"
+			Title = "Mirage Island + V4"
 		}),
 		Drago = Window:AddTab({
-			Title = "Đảo Drago Dojo"
+			Title = "Drago Dojo Island"
 		}),
 		Prehistoric = Window:AddTab({
-			Title = "Tiền sử"
+			Title = "Prehistoric"
 		}),
 		Raids = Window:AddTab({
-			Title = "Đột kích"
+			Title = "Raids"
 		}),
 		Combat = Window:AddTab({
-			Title = "Chiến đấu PVP"
+			Title = "Combat"
 		}),
 		Travel = Window:AddTab({
-			Title = "Dịch chuyển"
+			Title = "Teleport"
 		}),
 		Shop = Window:AddTab({
-			Title = "Cửa hàng"
+			Title = "Shop"
 		}),
 		Misc = Window:AddTab({
-			Title = "Khác"
+			Title = "Misc"
 		})
 	}
+	
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Players = game:GetService("Players")
+	Tabs.Main:AddSection("Halloween Event")
+	
+	local HalloweenToggle = Tabs.Main:AddToggle("HalloweenToggle", {
+    Title = "Auto Trick or Treat",
+    Description = "",
+    Default = false
+})
+
+local knockDelay = 2
+local doorDelay = 1
+local trickDelay = 1
+
+local DoorBySea = {
+    World1 = {
+        CFrame.new(-1016.05951,11.1554155,1540.78235,-0.259074688,0,0.965857327,0,1,0,-0.965857327,0,-0.259074688),
+        CFrame.new(-1089.28284,10.6633625,1604.43518,0.866141319,0,-0.499799222,0,1,0,0.499799222,0,0.866141319),
+        CFrame.new(-1090.78882,10.5735903,1694.84729,0.965862036,0,0.259057134,0,1,0,-0.259057134,0,0.965862036),
+        CFrame.new(-665.780701,9.71188927,1701.52112,-0.99181968,5.254558036e-08,-0.127646819,5.13036298e-08,1,1.30173978e-08,0.127646819,6.36216635e-09,-0.99181968),
+        CFrame.new(-571.03418,9.71188927,1553.104,0.238623217,8.71156587e-08,-0.971112251,2.74919216e-08,1,9.64624505e-08,0.971112251,-4.97159226e-08,0.238623217),
+        CFrame.new(-615.743652,9.68747139,1479.30908,0.815481067,0.00558292679,-0.578756809,0.000366810855,0.999948263,0.0101627586,0.578783572,-0.00849983189,0.8154369),
+        CFrame.new(722.841309,7.79379559,1444.29028,0.977708578,-4.91986221e-08,-0.209966481,3.68222004e-08,1,-6.2854042e-08,0.209966481,5.37215108e-08,0.977708578)
+    },
+    World2 = {
+        CFrame.new(-61.5351906,74.4224091,-402.107605,-0.707134247,0,-0.707079291,0,1,0,0.707079291,0,-0.707134247),
+        CFrame.new(69.3701019,75.8226624,-470.087311,0.74314785,0,-0.669127226,0,1,0,0.669127226,0,0.74314785),
+        CFrame.new(-11.9682884,74.4216156,-549.419861,-1,0,0,0,1,0,0,0,-1)
+    },
+    World3 = {
+        CFrame.new(-12257.124,334.613007,-7417.19434,-0.996191859,0,-0.0871884301,0,1,0,0.0871884301,0,-0.996191859),
+        CFrame.new(-12179.9883,335.293854,-7568.4043,0.984812498,0,0.173621148,0,1,0,-0.173621148,0,0.984812498),
+        CFrame.new(-12307.4014,335.27951,-7572.65381,-0.173624277,0,-0.984811902,0,1,0,0.984811902,0,-0.173624277)
+    }
+}
+
+DoorPositions = World1 and DoorBySea.World1 or World2 and DoorBySea.World2 or World3 and DoorBySea.World3 or {}
+
+local function FindNearestPrompt(position)
+    local nearest, dist = nil, 10
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            local parent = v.Parent
+            local root = parent:FindFirstChild("HumanoidRootPart") or parent:FindFirstChild("Head") or parent:FindFirstChild("Torso") or parent
+            if root then
+                local d = (root.Position - position).Magnitude
+                if d < dist then
+                    dist = d
+                    nearest = v
+                end
+            end
+        end
+    end
+    return nearest
+end
+
+HalloweenToggle:OnChanged(function(value)
+    _G.HalloweenToggle = value
+    end)
+
+spawn(function()
+	while task.wait(0.1) do
+		if _G.HalloweenToggle then
+			for i = 1, #DoorPositions do
+				if not _G.HalloweenToggle then
+					break
+				end
+
+				local cf = DoorPositions[i]
+				
+				-- Teleport near the door
+				_tp(cf + Vector3.new(0, 3, 0))
+				task.wait(0.2)
+				
+				if plr.PlayerGui.Main.Dialogue.Visible == true then
+					plr.PlayerGui.Main.Dialogue.Visible = false
+				end
+			
+				-- Try to find and trigger the prompt
+				local prompt = FindNearestPrompt(cf.Position)
+				if prompt then
+					pcall(function()
+						fireproximityprompt(prompt)
+						task.wait(knockDelay)
+						fireproximityprompt(prompt)
+					end)
+				end
+				
+				task.wait(doorDelay)
+				
+				pcall(function()
+					replicated.Remotes.HalloweenEvent:FireServer("AcceptReward")
+					replicated.Remotes.HalloweenEvent:FireServer("Parlus")
+					replicated.Remotes.HalloweenEvent:FireServer("ignore")
+					local rf = replicated:FindFirstChild("{6306b822-ed5d-426c-b0c1-5cdb809cc7f5}")
+					if rf and rf:FindFirstChild("RemoteFunction") then
+						rf.RemoteFunction:InvokeServer("ignore")
+					end
+				end)
+				task.wait(trickDelay)
+			end
+		end
+	end
+end)
+
+local HalloweenDoorEnemies = Tabs.Main:AddToggle("AutoDefeatDoorEnemies", {
+    Title = "Auto Defeat Door Enemies",
+    Description = "",
+    Default = false
+})
+
+local HalloweenEnemies = {
+    "Cursed Skeleton",
+    "Vampire",
+    "Gorilla",
+    "Oni Soldier",
+    "Celestial Soldier",
+    "Snowman",
+    "rip_return"
+}
+
+HalloweenDoorEnemies:OnChanged(function(value)
+    _G.AutoDefeatHalloweenDoorEnemie = value
+end)
+
+spawn(function()
+    while task.wait(0.5) do
+        if _G.AutoDefeatHalloweenDoorEnemie then
+            local success, err = pcall(function()
+                for i, v in next, game.Workspace.Enemies:GetChildren() do
+                    if v:IsA("Model")
+                        and v:FindFirstChild("Humanoid")
+                        and v.Humanoid.Health > 0
+                        and table.find(HalloweenEnemies, v.Name) then
+                        
+                        repeat
+                            task.wait()
+                            Attack.Kill(v, _G.AutoDefeatHalloweenDoorEnemie)
+                        until not _G.AutoDefeatHalloweenDoorEnemie or not v.Parent or v.Humanoid.Health <= 0
+                    end
+                end
+            end)
+
+            if not success then
+                warn("Auto Defeat Halloween Door Enemie Error:", err)
+                task.wait(1)
+            end
+        end
+    end
+end)
+
+local HalloweenGacha = Tabs.Main:AddToggle("HalloweenGacha", {
+    Title = "Auto Halloween Gacha",
+    Description = "",
+    Default = false
+})
+
+HalloweenGacha:OnChanged(function(value)
+    _G.HalloweenGacha2025 = value
+end)
+
+task.spawn(function()
+    while task.wait(1.5) do
+        pcall(function()
+            if _G.HalloweenGacha2025 then
+                replicated.Remotes.CommF_:InvokeServer("Cousin", "HalloweenGacha25")
+            end
+        end)
+    end
+end)
+
+local AutoWerewolf = Tabs.Main:AddToggle("AutoWerewolf", {
+    Title = "Auto Defeat Werewolf",
+    Description = "",
+    Default = false
+})
+
+AutoWerewolf:OnChanged(function(value)
+    _G.Werewolf = value
+end)
+
+task.spawn(function()
+    while task.wait(0.5) do
+        if _G.Werewolf then
+            local success, err = pcall(function()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v:IsA("Model") and v.Name == "Unbound Werewolf" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        if v.Humanoid.Health > 0 then
+                            repeat
+                                task.wait()
+                                Attack.Kill(v, _G.Werewolf)
+                            until not _G.Werewolf or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            end)
+
+            if not success then
+                warn("Werewolf AutoKill Error:", err)
+                task.wait(1)
+            end
+        end
+    end
+end)
+
 
 	Tabs.Discord:AddButton({
-		Title = "still making discord",
-		Description = "Đây nha anh em ( Copy rồi dán vào trình duyệt )",
+		Title = "OWNER: MINISTRY",
+		Description = "",
 		Callback = function()
 			setclipboard(tostring(""))
 		end
@@ -4598,7 +4860,7 @@
 	local Bringmob = Tabs.Settings:AddToggle("Bringmob", {
 		Title = "Bring Mobs",
 		Description = "",
-		Default = false
+		Default = true
 	})
 	Bringmob:OnChanged(function(Value)
 		_B = Value
